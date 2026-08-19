@@ -10,7 +10,9 @@ export async function fetchEpisodes(
   page: number = 1
 ): Promise<ApiResponse<EpisodeType[]>> {
   try {
-    return await fetchApi(`/episode?page=${page}`);
+    return await fetchApi(`/episode?page=${page}`, {
+      next: { revalidate: 60, tags: ["episodes"] },
+    });
   } catch (e) {
     if (e instanceof ApiError && e.status === 429) throw e;
     return { info: { count: 0, pages: 0, next: null, prev: null }, results: [] };
@@ -18,7 +20,9 @@ export async function fetchEpisodes(
 }
 
 export async function fetchEpisode(id: number): Promise<EpisodeType> {
-  return fetchApi(`/episode/${id}`);
+  return fetchApi(`/episode/${id}`, {
+    next: { revalidate: 60, tags: [`episode-${id}`] },
+  });
 }
 
 export async function fetchEpisodesByIds(
@@ -37,7 +41,8 @@ export async function fetchEpisodesByIds(
   const results = await Promise.all(
     chunks.map((chunk) =>
       fetchApi<EpisodeType[] | EpisodeType>(
-        `/episode/${chunk.join(",")}`
+        `/episode/${chunk.join(",")}`,
+        { next: { revalidate: 60, tags: ["episodes"] } }
       ).then((res) => (Array.isArray(res) ? res : [res]))
     )
   );

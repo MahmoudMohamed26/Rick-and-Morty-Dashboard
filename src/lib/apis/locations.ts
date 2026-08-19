@@ -7,7 +7,9 @@ export async function fetchLocations(
   page: number = 1
 ): Promise<ApiResponse<LocationType[]>> {
   try {
-    return await fetchApi(`/location?page=${page}`);
+    return await fetchApi(`/location?page=${page}`, {
+      next: { revalidate: 60, tags: ["locations"] },
+    });
   } catch (e) {
     if (e instanceof ApiError && e.status === 429) throw e;
     return { info: { count: 0, pages: 0, next: null, prev: null }, results: [] };
@@ -15,5 +17,7 @@ export async function fetchLocations(
 }
 
 export async function fetchLocation(id: number): Promise<LocationType> {
-  return fetchApi(`/location/${id}`);
+  return fetchApi(`/location/${id}`, {
+    next: { revalidate: 60, tags: [`location-${id}`] },
+  });
 }

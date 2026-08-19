@@ -22,7 +22,9 @@ export async function fetchCharacters(
   if (filters?.status) params.set("status", filters.status);
   if (filters?.species) params.set("species", filters.species);
   try {
-    return await fetchApi(`/character?${params.toString()}`);
+    return await fetchApi(`/character?${params.toString()}`, {
+      next: { revalidate: 60, tags: ["characters"] },
+    });
   } catch (e) {
     if (e instanceof ApiError && e.status === 429) throw e;
     return { info: { count: 0, pages: 0, next: null, prev: null }, results: [] };
@@ -30,7 +32,9 @@ export async function fetchCharacters(
 }
 
 export async function fetchCharacter(id: number): Promise<CharacterType> {
-  return fetchApi(`/character/${id}`);
+  return fetchApi(`/character/${id}`, {
+    next: { revalidate: 60, tags: [`character-${id}`] },
+  });
 }
 
 export async function fetchCharactersByIds(
@@ -49,7 +53,8 @@ export async function fetchCharactersByIds(
   const results = await Promise.all(
     chunks.map((chunk) =>
       fetchApi<CharacterType[] | CharacterType>(
-        `/character/${chunk.join(",")}`
+        `/character/${chunk.join(",")}`,
+        { next: { revalidate: 60, tags: ["characters"] } }
       ).then((res) => (Array.isArray(res) ? res : [res]))
     )
   );

@@ -17,6 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 import { NAV_GROUPS } from "@/config/nav";
 import logo from "@/assets/logo.png";
+import tempoLogo from "@/assets/tempo.png";
 
 const AppSidebar = () => {
   const pathname = usePathname();
@@ -82,8 +83,18 @@ const AppSidebar = () => {
       </SidebarContent>
 
       <SidebarFooter>
-        <div className="px-2 py-3 text-xs text-muted-foreground text-center group-data-[collapsible=icon]:hidden">
-          Rick & Morty Dashboard
+        <div className="flex items-center gap-3 border-t border-border/70 px-3 py-3 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+          <img
+            src={tempoLogo.src}
+            alt="Tempo"
+            className="h-8 w-8 shrink-0 rounded-full object-cover"
+          />
+          <div className="flex flex-col min-w-0 group-data-[collapsible=icon]:hidden">
+            <span className="text-sm font-medium truncate">Mahmoud Kamel</span>
+            <span className="text-xs text-muted-foreground truncate">
+              mahmoudkamel@tempo.fit
+            </span>
+          </div>
         </div>
       </SidebarFooter>
     </Sidebar>

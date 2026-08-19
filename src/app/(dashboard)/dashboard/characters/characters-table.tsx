@@ -37,7 +37,7 @@ const STATUS_OPTIONS = ["Alive", "Dead", "unknown"];
 const columns: DataTableColumn<CharacterType>[] = [
   {
     key: "image",
-    name: "#",
+    name: "Image",
     sortable: false,
     cell: (value) => (
       <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">

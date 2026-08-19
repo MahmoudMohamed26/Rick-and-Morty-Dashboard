@@ -1,6 +1,8 @@
 import { fetchLocation } from "@/lib/apis/locations";
 import { notFound } from "next/navigation";
 import { LocationDetail } from "./location-detail";
+import { RateLimitBanner } from "@/components/global/rate-limit-banner";
+import { ApiError } from "@/lib/errors/api-error";
 
 export default async function LocationDetailPage({
   params,
@@ -12,7 +14,10 @@ export default async function LocationDetailPage({
   let location;
   try {
     location = await fetchLocation(Number(id));
-  } catch {
+  } catch (e) {
+    if (e instanceof ApiError && e.status === 429) {
+      return <RateLimitBanner />;
+    }
     notFound();
   }
 

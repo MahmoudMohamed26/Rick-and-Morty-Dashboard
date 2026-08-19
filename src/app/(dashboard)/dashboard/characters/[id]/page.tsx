@@ -1,6 +1,8 @@
 import { fetchCharacter } from "@/lib/apis/characters";
 import { notFound } from "next/navigation";
 import { CharacterDetail } from "./character-detail";
+import { RateLimitBanner } from "@/components/global/rate-limit-banner";
+import { ApiError } from "@/lib/errors/api-error";
 
 export default async function CharacterDetailPage({
   params,
@@ -12,7 +14,10 @@ export default async function CharacterDetailPage({
   let character;
   try {
     character = await fetchCharacter(Number(id));
-  } catch {
+  } catch (e) {
+    if (e instanceof ApiError && e.status === 429) {
+      return <RateLimitBanner />;
+    }
     notFound();
   }
 

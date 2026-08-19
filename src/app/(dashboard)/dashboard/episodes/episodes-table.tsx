@@ -13,7 +13,8 @@ const columns: DataTableColumn<EpisodeType>[] = [
   {
     key: "characters",
     name: "Characters",
-    sortable: false,
+    sortable: true,
+    sortingFn: (a, b) => (a.characters as string[]).length - (b.characters as string[]).length,
     cell: (value) => (
       <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
         {(value as string[]).length}

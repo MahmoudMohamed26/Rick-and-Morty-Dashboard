@@ -2,8 +2,9 @@ import type { ApiResponse } from "../types/api";
 import type { CharacterType } from "../types/character";
 import { extractIdsFromUrls } from "../utils/extract-ids";
 import { fetchApi } from "./client";
+import { ApiError } from "@/lib/errors/api-error";
 
-const BATCH_SIZE = 20;
+const BATCH_SIZE = 500;
 
 export interface CharacterFilters {
   name?: string;
@@ -22,7 +23,8 @@ export async function fetchCharacters(
   if (filters?.species) params.set("species", filters.species);
   try {
     return await fetchApi(`/character?${params.toString()}`);
-  } catch {
+  } catch (e) {
+    if (e instanceof ApiError && e.status === 429) throw e;
     return { info: { count: 0, pages: 0, next: null, prev: null }, results: [] };
   }
 }

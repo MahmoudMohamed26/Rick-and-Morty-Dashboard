@@ -35,6 +35,7 @@ export interface DataTableColumn<TData> {
   name: string;
   sortable?: boolean;
   cell?: (value: unknown, row: TData) => React.ReactNode;
+  sortingFn?: (a: TData, b: TData) => number;
 }
 
 interface DataTableProps<TData extends { id: number | string }> {
@@ -96,6 +97,9 @@ export function DataTable<TData extends { id: number | string }>({
         accessorKey: col.key as never,
         header: col.name,
         enableSorting: col.sortable ?? idx !== 0,
+        sortFn: col.sortingFn
+          ? (a, b) => col.sortingFn!(a.original, b.original)
+          : undefined,
         cell: ({ row }) => {
           const value = getNestedValue(row.original, col.key);
 

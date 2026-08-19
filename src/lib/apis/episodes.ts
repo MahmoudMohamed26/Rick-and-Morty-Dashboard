@@ -2,13 +2,19 @@ import type { ApiResponse } from "../types/api";
 import type { EpisodeType } from "../types/episode";
 import { extractIdsFromUrls } from "../utils/extract-ids";
 import { fetchApi } from "./client";
+import { ApiError } from "@/lib/errors/api-error";
 
-const BATCH_SIZE = 20;
+const BATCH_SIZE = 500;
 
 export async function fetchEpisodes(
   page: number = 1
 ): Promise<ApiResponse<EpisodeType[]>> {
-  return fetchApi(`/episode?page=${page}`);
+  try {
+    return await fetchApi(`/episode?page=${page}`);
+  } catch (e) {
+    if (e instanceof ApiError && e.status === 429) throw e;
+    return { info: { count: 0, pages: 0, next: null, prev: null }, results: [] };
+  }
 }
 
 export async function fetchEpisode(id: number): Promise<EpisodeType> {

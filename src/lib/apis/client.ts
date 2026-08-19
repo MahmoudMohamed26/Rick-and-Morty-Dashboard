@@ -1,3 +1,5 @@
+import { ApiError } from "@/lib/errors/api-error";
+
 const BASE_URL = process.env.NEXT_PUBLIC_RICK_AND_MORTY_API_URL!;
 
 interface FetchOptions extends RequestInit {
@@ -16,7 +18,7 @@ export async function fetchApi<T>(
   });
 
   if (!res.ok) {
-    throw new Error(`API error: ${res.status} ${res.statusText}`);
+    throw new ApiError(res.status, `API error: ${res.status} ${res.statusText}`);
   }
 
   if (res.status === 204) {

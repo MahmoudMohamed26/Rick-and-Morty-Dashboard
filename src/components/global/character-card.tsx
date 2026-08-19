@@ -22,7 +22,7 @@ export function CharacterCard({ character }: { character: CharacterType }) {
         />
       </div>
       <div className="min-w-0 flex-1">
-        <h4 className="truncate text-sm font-semibold">{character.name}</h4>
+        <h4 className="text-sm font-semibold line-clamp-2">{character.name}</h4>
         <p className="text-xs text-muted-foreground">
           {character.species}
           {character.gender !== "unknown" && ` · ${character.gender}`}

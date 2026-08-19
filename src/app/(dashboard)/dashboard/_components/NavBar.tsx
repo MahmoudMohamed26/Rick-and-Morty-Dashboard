@@ -11,9 +11,9 @@ const NavBar = () => {
   return (
     <header className="sticky bg-sidebar top-0 z-30 h-16 flex items-center justify-between px-4 lg:px-6 gap-4 backdrop-blur-xl border-b border-border/70">
       <div className="flex items-center gap-3">
-        <SidebarTrigger className="h-9 w-9 rounded-lg hover:bg-accent" />
+        <SidebarTrigger className="h-9 w-9 rounded-lg text-primary" />
         <div>
-          <h1 className="text-base font-bold leading-none text-foreground">
+          <h1 className="text-base font-bold leading-none text-primary">
             {meta.title}
           </h1>
           <p className="text-xs text-muted-foreground mt-1">

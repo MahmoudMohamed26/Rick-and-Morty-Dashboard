@@ -19,7 +19,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} h-full antialiased`}>
       <body suppressHydrationWarning className="min-h-full flex flex-col">
-        <NextTopLoader color="#171616" showSpinner={false} />
+        <NextTopLoader color="#1c4524" showSpinner={false} />
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -30,9 +30,9 @@ const AppSidebar = () => {
 
   return (
     <Sidebar side="left" collapsible="icon">
-      <SidebarHeader className="border-b border-border/70 min-h-16 justify-center">
+      <SidebarHeader className="border-b border-border/70 min-h-[83.5px] justify-center">
         <Link href="/dashboard" className="flex items-center justify-center py-1">
-          <div className="max-w-20">
+          <div className="max-w-40">
             <img src={logo.src} alt="Rick & Morty Dashboard" />
           </div>
         </Link>

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, MapPin, Tv } from "lucide-react";
 import type { CharacterType } from "@/lib/types/character";
+import InfoRow from "@/components/global/info-row";
 
 const statusColor: Record<string, string> = {
   Alive: "bg-emerald-500/10 text-emerald-700 border-emerald-500/20",
@@ -23,38 +24,6 @@ const statusDot: Record<string, string> = {
 function extractIdFromUrl(url: string): string | null {
   const match = url.match(/\/(\d+)$/);
   return match ? match[1] : null;
-}
-
-function InfoRow({
-  icon: Icon,
-  label,
-  value,
-  href,
-}: {
-  icon: React.ElementType;
-  label: string;
-  value: string;
-  href?: string;
-}) {
-  const content = (
-    <div className="flex items-center gap-3 rounded-lg border border-border/60 bg-card p-3">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary">
-        <Icon className="h-4 w-4 text-muted-foreground" />
-      </div>
-      <div className="min-w-0">
-        <p className="text-xs text-muted-foreground">{label}</p>
-        <p className="truncate text-sm font-medium">{value}</p>
-      </div>
-    </div>
-  );
-
-  return href ? (
-    <Link href={href} className="block transition-all hover:border-primary/40 hover:shadow-sm">
-      {content}
-    </Link>
-  ) : (
-    content
-  );
 }
 
 export function CharacterDetail({ character }: { character: CharacterType }) {

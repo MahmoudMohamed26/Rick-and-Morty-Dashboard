@@ -7,7 +7,6 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   type LegacyColumnDef as ColumnDef,
-  type LegacyRow as Row,
 } from "@tanstack/react-table/legacy";
 import { ChevronsUpDown, ChevronUp, ChevronDown, Eye } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -82,12 +81,7 @@ export function DataTable<TData extends { id: number | string }>({
             id: "#",
             header: "#",
             enableSorting: false,
-            cell: ({ row }) => {
-              const sortedIndex = table
-                .getSortedRowModel()
-                .rows.findIndex((r: Row<TData>) => r.id === row.id);
-              return (sortedIndex >= 0 ? sortedIndex : row.index) + 1;
-            },
+            cell: ({ row }) => row.original.id,
           },
         ] as ColumnDef<TData, unknown>[])
       : []),

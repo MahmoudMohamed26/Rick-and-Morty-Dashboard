@@ -26,8 +26,8 @@ A responsive web application for exploring characters, episodes, and locations f
 
 ```bash
 # Clone the repository
-git clone https://github.com/MahmoudMohamed26/Rick-and-Morty-Dashboard
-cd richandmorty-dashboard
+git clone https://github.com/MahmoudMohamed26/Rick-and-Morty-Dashboard.git
+cd Rick-and-Morty-Dashboard
 
 # Install dependencies
 npm install
